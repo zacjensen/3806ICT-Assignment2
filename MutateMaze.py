@@ -30,7 +30,7 @@ def printMaze(maze, startPos, endPos):
             else:
                 print(Fore.RED + str(maze[i][j]), end=" ")
         print()
-    print("\nStart Pos: (" + str(startPos[0]) + " " + str(startPos[1]) + ")\n")
+    #print("\nStart Pos: (" + str(startPos[0]) + " " + str(startPos[1]) + ")\n")
 
 
 def printTxt(maze, startPos, endPos):
@@ -54,7 +54,7 @@ def printTxt(maze, startPos, endPos):
         print(row, file=sourceFile)
         row = ""
     sourceFile.close()
-    print("Maze .txt outputted as", fileName)
+    #print("Maze .txt outputted as", fileName)
 
 
 # Find number of surrounding cells
@@ -254,17 +254,17 @@ def finishMazeMutate(steps, maze):
             if (maze[i][j] == unvisited):
                 maze[i][j] = wall
 
-    # Set entrance
+    # Set start
     pos = (0,0)
     startPos = (steps[-1][0], steps[-1][1])
     maze[startPos[0]][startPos[1]] = cell  
  
 
-    #set goal to be a 4N-1 random walk from start
+    #set goal to be a random walk from start
     pos = list(startPos)
     visited = [] #prefer to not revisit old paths but still might
     
-    for i in range(50*len(maze)):
+    for i in range(2*(2*width - len(steps))):
         choices = []
         x = pos[1]
         y = pos[0]
@@ -284,10 +284,26 @@ def finishMazeMutate(steps, maze):
         pos = c
         visited.append(pos)
 
+    #move once more to make sure goal is not at start
+    choices = []
+    x = pos[1]
+    y = pos[0]
+    if(maze[y][x-1] == cell and startPos != (y, x-1)):
+        choices.append([y, x-1])
+    if(maze[y][x+1] == cell and startPos != (y, x+1)):
+        choices.append([y, x+1])
+    if(maze[y-1][x] == cell and startPos != (y-1, x)):
+        choices.append([y-1, x])
+    if(maze[y+1][x] == cell and startPos != (y+1, x)):
+        choices.append([y+1, x])
+
+    c = random.choice(choices)       
+    pos = c
+
     endPos = pos
     maze[endPos[0]][endPos[1]] = cell  
 
-    print("Mutated maze: currently at ", startPos, " and goal is now at ", endPos)
+    #print("Mutated maze: currently at ", startPos, " and goal is now at ", endPos)
     return  startPos, endPos, maze
       
         

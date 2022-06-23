@@ -17,9 +17,8 @@ endPos = (0, 0)
 # Initialize colorama
 init()
 random.seed(time.time())
+
 # Print Maze
-
-
 def printMaze(maze):
     for i in range(0, height):
         for j in range(0, width):
@@ -34,7 +33,7 @@ def printMaze(maze):
             else:
                 print(Fore.RED + str(maze[i][j]), end=" ")
         print()
-    print("\nStart Pos: (" + str(startPos[0]) + " " + str(startPos[1]) + ")\n")
+    #print("\nStart Pos: (" + str(startPos[0]) + " " + str(startPos[1]) + ")\n")
 
 # Find number of surrounding cells
 
@@ -267,11 +266,11 @@ def finishMaze():
     pos = list(startPos)
     visited = [] #prefer to not revisit old paths but still might
     
-    for i in range(4*len(maze)):
+    for i in range(50*len(maze)):
         choices = []
         x = pos[1]
         y = pos[0]
-        if(x > 1 and maze[y][x-1] == cell):
+        if(maze[y][x-1] == cell):
             choices.append([y, x-1])
         if(maze[y][x+1] == cell):
             choices.append([y, x+1])
@@ -286,15 +285,27 @@ def finishMaze():
         
         pos = c
         visited.append(pos)
+
+    #move once more to make sure goal is not at start
+    choices = []
+    x = pos[1]
+    y = pos[0]
+    if(maze[y][x-1] == cell and startPos != (y, x-1)):
+        choices.append([y, x-1])
+    if(maze[y][x+1] == cell and startPos != (y, x+1)):
+        choices.append([y, x+1])
+    if(maze[y-1][x] == cell and startPos != (y-1, x)):
+        choices.append([y-1, x])
+    if(maze[y+1][x] == cell and startPos != (y+1, x)):
+        choices.append([y+1, x])
+
+    c = random.choice(choices)       
+    pos = c
         
-
-
     endPos = pos
     maze[endPos[0]][endPos[1]] = cell  
 
-    print("Generated Maze with Start at ", startPos, " and goal at ", endPos)
-
-    
+    #print("Generated Maze with Start at ", startPos, " and goal at ", endPos)
 
 
 def run(params):
@@ -309,6 +320,6 @@ def run(params):
     dfs(walls)
     finishMaze()
     # If maze is too big don't print
-    if ((width * height) < 2000):
+    if ((width * height) <= 10000):
         printMaze(maze)
     return

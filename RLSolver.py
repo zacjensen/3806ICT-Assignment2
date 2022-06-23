@@ -273,7 +273,7 @@ def main(params, plot=False):
         if char == 'S':
             start_position = [math.floor(
                 count / (height + 1)), count % (width + 1)]
-            print("startposition = ", start_position)
+            #print("startposition = ", start_position)
             # break
         if not char:
             break
@@ -308,11 +308,10 @@ def main(params, plot=False):
 
     # print(f"Are trace and test_trace the same?: {trace==test_trace}")
 
-    print("Number of tiles covered (including start and end tiles) is",
-          test_trace.shape[0])
+    #print("Number of tiles covered (including start and end tiles) is",test_trace.shape[0])
     # Print time taken
     end = time.time()
-    print("Time taken: ", round(end - begin, 5))
+    print("\nReplanning Time taken: ", round(end - begin, 5), "\n")
     plt.show()
 
     return test_trace

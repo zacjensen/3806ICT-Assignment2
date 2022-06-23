@@ -21,7 +21,7 @@ def printTxt(maze):
         print(row, file=sourceFile)
         row = ""
     sourceFile.close()
-    print("Maze .txt outputted as", fileName)
+    #print("Maze .txt outputted as", fileName)
 
 
 def printCSP(maze):
