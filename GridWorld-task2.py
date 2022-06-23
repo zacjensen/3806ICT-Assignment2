@@ -25,3 +25,8 @@ if __name__ == '__main__':
     if trace_len <= 2*N:
         print(f"Valid path of length {trace_len} found.")
         print(f"Maximum allowed path length for this maze is {2*N}")
+
+    # Otherwise the path was greater than 2N
+    else:
+        print(f"Invalid path of length {trace_len} found.")
+        print(f"Maximum allowed path length for this maze is {2*N}")

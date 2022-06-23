@@ -1,0 +1,30 @@
+﻿//@@Maze Game@@
+//The following are constants of the maze game; They are defined only for readability.
+#define M ; //board length/no. of columns																					
+#define N ; //board height/no. of rows																					
+#define O 0; //open space
+#define H -1; //wall
+#define G 1; //goal
+
+//The following are variables of the system, which constitute the state space.
+//The initial valuation of the variables corresponds to the initial schema.
+//
+var maze[N][M] = 
+// Start position:
+var r:{0..N-1} = ; //row																									
+var c:{0..M-1} = ; //column
+
+Game = [r-1>=0]MoveUp [] [r+1<N]MoveDown [] [c-1>=0]MoveLeft [] [c+1<M]MoveRight;
+
+MoveUp = [maze[r-1][c]==O || maze[r-1][c]==G]go_up{r=r-1} -> Game;
+
+MoveDown = [maze[r+1][c]==O || maze[r+1][c]==G]go_down{r=r+1} -> Game;
+
+MoveLeft = [maze[r][c-1]==O || maze[r][c-1]==G]go_left{c=c-1} -> Game;
+
+MoveRight = [maze[r][c+1]==O || maze[r][c+1]==G]go_right{c=c+1} -> Game;
+
+
+//note: if you change the cross position in the following, the simulator will not reflect the changes.
+#define goal maze[r][c] == G;
+#assert Game reaches goal;

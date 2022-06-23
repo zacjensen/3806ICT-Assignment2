@@ -1,0 +1,40 @@
+﻿//@@GridMaze@@
+//The following are constants of the GridWorld Maze game; They are defined only for readability.
+#define M 10; //board length/no. of columns																					//this needs to be changed with the generation
+#define N 10; //board height/no. of rows																					//to be changed
+#define O 0; //open space
+#define H -1; //wall
+#define G 1; //goal
+
+//The following are variables of the system, which constitute the state space.
+//The initial valuation of the variables corresponds to the initial schema.
+//Note that top left position is [0][0], while bottom right position is [4],[4]
+//
+//    col number: 0 1 2 3 4 5 6 7 8 9
+var maze[N][M] = [O,O,O,H,O,O,O,O,H,H, //0 row number starting from 0														//change this in the generation
+                  O,H,H,H,O,O,O,O,H,H, //1
+                  O,H,G,O,O,O,O,O,H,H, //2
+                  O,O,O,O,H,O,O,O,H,H, //3
+                  O,O,H,O,O,O,O,O,H,H, //4
+                  O,O,O,H,O,O,O,O,H,H, //5
+                  O,H,H,H,O,O,O,O,H,H, //6
+                  O,H,G,O,O,O,O,O,H,H, //7
+                  O,O,O,O,H,O,O,O,H,H, //8
+                  O,O,H,O,O,O,O,O,H,H]; //9
+// Start position of runner:
+var r:{0..N-1} = 0; //row																									//change this in the generation
+var c:{0..M-1} = 0; //column
+
+Game = [r-1>=0]MoveUp [] [r+1<N]MoveDown [] [c-1>=0]MoveLeft [] [c+1<M]MoveRight;				//calls the moves below
+
+MoveUp = [maze[r-1][c]==O || maze[r-1][c]==G]go_up{r=r-1} -> Game;								//Checks for either goal or open space and moves up by decreasing the count of r. 
+
+MoveDown = [maze[r+1][c]==O || maze[r+1][c]==G]go_down{r=r+1} -> Game;							//Checks for either goal or open space and moves down by increasing the count of r
+
+MoveLeft = [maze[r][c-1]==O || maze[r][c-1]==G]go_left{c=c-1} -> Game;							//Checks for either goal or open space and moves left by decreasing the count of c
+
+MoveRight = [maze[r][c+1]==O || maze[r][c+1]==G]go_right{c=c+1} -> Game;						//Checks for either goal or open space and moves right by increasing the count of r
+
+
+#define goal maze[r][c] == G;				//defines the goal as when the runner reaches G
+#assert Game reaches goal;					//assert that the Game can reach the goal - should always be valid if the maze generation works accordingly
