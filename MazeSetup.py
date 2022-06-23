@@ -250,39 +250,51 @@ def finishMaze():
         for j in range(0, width):
             if (maze[i][j] == unvisited):
                 maze[i][j] = wall
-
-    # Set entrance and exit
-    start = int(random.randrange(2))
-    end = int(random.randrange(2))
-    pos = (0, 0)
+ 
+    # Set entrance
+    pos = [0,0]
+   
     positions = []
-    if (start == 0):
-        for i in range(0, width):
-            if (maze[1][i] == cell):
-                pos = (0, i)
-                positions.append(pos)
-    else:
-        for i in range(0, height):
-            if (maze[i][1] == cell):
-                pos = (i, 0)
-                positions.append(pos)
-    startPos = random.choice(positions)
-    maze[startPos[0]][startPos[1]] = cell
-    positions.clear()
 
-    if (end == 0):
-        for i in range(width-1, 0, -1):
-            if (maze[height-2][i] == cell):
-                pos = (height-1, i)
-                positions.append(pos)
-    else:
-        for i in range(height-1, 0, -1):
-            if (maze[i][width-2] == cell):
-                pos = (i, width-1)
-                positions.append(pos)
-    endPos = random.choice(positions)
-    maze[endPos[0]][endPos[1]] = cell
-    positions.clear()
+    for i in range(0, height):
+        if (maze[i][1] == cell):
+            pos = [i, 1]
+            positions.append(pos)
+    startPos = random.choice(positions)
+    maze[startPos[0]][startPos[1]] = cell    
+
+    #set goal to be a 2N-1 random walk from start
+    pos = list(startPos)
+    visited = [] #prefer to not revisit old paths but still might
+    
+    for i in range(4*len(maze)):
+        choices = []
+        x = pos[1]
+        y = pos[0]
+        if(x > 1 and maze[y][x-1] == cell):
+            choices.append([y, x-1])
+        if(maze[y][x+1] == cell):
+            choices.append([y, x+1])
+        if(maze[y-1][x] == cell):
+            choices.append([y-1, x])
+        if(maze[y+1][x] == cell):
+            choices.append([y+1, x])
+
+        c = random.choice(choices)
+        if(c in visited):
+            c = random.choice(choices)
+        
+        pos = c
+        visited.append(pos)
+        
+
+
+    endPos = pos
+    maze[endPos[0]][endPos[1]] = cell  
+
+    print("Generated Maze with Start at ", startPos, " and goal at ", endPos)
+
+    
 
 
 def run(params):

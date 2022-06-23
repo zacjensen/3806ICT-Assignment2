@@ -84,6 +84,7 @@ def printCSP(maze):
 def main(params):
     MazeSetup.run(params)
     printTxt(MazeSetup.maze)
+    return MazeSetup.maze
 
 
 if __name__ == '__main__':
