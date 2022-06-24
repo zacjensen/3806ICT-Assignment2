@@ -3,7 +3,7 @@ import GenerateMaze
 import RLSolver
 import sys
 import MutateMaze
-
+import time
 
 def traceToSteps(trace):
     """
@@ -15,6 +15,8 @@ def traceToSteps(trace):
     return steps
 
 if __name__ == '__main__':
+
+    begin = time.time()
     # Get the dimensions of the maze from the command line
     width = int(sys.argv[1])
     height = int(sys.argv[2])
@@ -67,4 +69,10 @@ else:
 
 
 print("\nStep Summary:")
+
+
+end = time.time()
+
 print(taken_steps)
+
+print("\nTime Taken (s): ", round(end-begin, 2)) 
