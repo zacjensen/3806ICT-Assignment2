@@ -36,7 +36,7 @@
     \section{Introduction}\label{sec:introduction}
         A maze world is defined as a 2D matrix of ASCII characters where ‘O’ is an open cell that the agent can step to, ‘H’ is a closed wall that the agent cannot step to, ‘G’ is the goal position for the agent, and ‘S’ is the start position for the agent. The agent may move around the maze by taking ‘steps’, where each step may involve moving up,down,left, or right by one cell. In this report, first a model representing an agent navigating a static (unchanging) maze world is shown. Next, a method for creating a dynamic environment is proposed. Finally, experiments on this model are conducted and an analysis of the results is performed.
 
-    \section{Task 2 - Planning in a Static Environment}\label{sec:test-design}
+    \section{Planning in a Static Environment}\label{sec:test-design}
         To model an agent navigating a static environment, a maze generation program aswell as a Q-learning based Reinforcement Learning (RL) algorithm were used which are available from the supplied ‘2021-assignment-sample2’ folder [1]. This model is available as ‘GridWorld-task2.py’ and can be run using the command line ‘python3 GridWorld-task2.py [maze\_width] [maze\_height]’.
 
 In this model, a maze is randomly generated with a start point and goal point using a common random depth-first search (DFS) based algorithm. The Q-learning algorithm then provides a set of steps (a trace) towards the goal from the start. An extra constraint for this model is that the agent can take no more than 2N steps where N is the width of the NxN maze. 
@@ -49,7 +49,7 @@ The model is outlined in the following pseudocode:\\
 \hspace*{5cm}goal $\leftarrow$ reached
 
 
-\section{Task 3 - Programming A Dynamic Environment}\label{sec:test-design}
+\section{Programming A Dynamic Environment}\label{sec:test-design}
 	To model a dynamic environment, a function was created which takes an existing maze and returns a new maze which is a ‘mutation’ of the original. This model is available as ‘GridWorld-task3.py’ which calls mutate\_maze() in ‘MutateMaze.py’ and can be run using the command line ‘python3 GridWorld-task3.py [maze\_width] [maze\_height]’. 
 
 	The constraints for this are that the new maze must share similarities to the old one, and obstacles in the new maze mustn’t overlap with the current, or previous positions of the agent. The goal must also not be blocked off from the agent by obstacles. To generate a mutation, first all of the previous positions of the agent are collected. Next, multiple random walks are conducted from the agents current position in the original maze, keeping track of all cells visited by the search. A new maze is initialised with all of the agent’s previous positions and cells visited by the random walks and the DFS maze generation algorithm is run to generate a new maze containing these cells. Finally, the new goal location is set using a random walk, where the walk becomes shorter if the agent has taken alot of steps. This mutation method generates a new maze that guarantees that the goal is reachable and the agent or its previous positions are not overlapped by an obstacle. It also produces a maze that has a similar structure to the old maze for all cells close to the agent, but becomes increasingly different for cells further away from the agent. 
@@ -63,7 +63,7 @@ The model is outlined in the following pseudocode:\\
 \end{figure}
 
 
-\section{Task 4 - Replanning in a Dynamic Environment}\label{sec:test-design}
+\section{Replanning in a Dynamic Environment}\label{sec:test-design}
 
 	To model planning and replanning in a dynamic environment, the agent in task 2 and the mutation function in task 3 were combined. This model is available as ‘GridWorld-task4.py’ and can be run using the command line ‘python3 GridWorld-task4.py [maze\_width] [maze\_height]’.
 
@@ -81,10 +81,21 @@ The model is outlined in the following pseudocode:\\
 	\hspace*{4cm}if 10\% chance occurs: mutate maze and break from for loop\\
 \hspace*{2cm}check if agent at goal
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{assets/task4figure.png}
+	\caption{Original Maze (Left), Mutated Maze (Mid), and Agent Log (Right)}
+\end{figure}
+
+Figure 2 shows a 20x20 maze example of the agent planning-replanning model, including the original maze, a mutation that occurs, and the agent's movements throughout the process. The agent can be seen to alter its course towards the new goal once it discovers a mutation event.
+
+
+\section{Experimentation }\label{sec:experimentation} 
+To assess the performance of the replanning model, an experiment was carried out. For maze sizes of 10x10, 50x50, and 100x100, the algorithm from task 4 was run 10 times each. The performance of the algorithm was then recorded, with the results presented in table 1 below. In terms of hardware, the experiment was performed using Python inside Visual Studio Code, on a Windows 10 PC with a Ryzen 5 3600 and 32GB of RAM. The parameters of the Reinforcement Learning Agent were set to gamma=0.99, alpha=0.1, epsilon=0.1, max iterations=3000, and max steps=1000.
+
 
     \section{Results}\label{sec:results}
 
-	%\begin{table}
         \begin{tabular}{ | m{1cm} | m{5em}| m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | } 
 	\hline
 	Size & Number of Times Goal was reached & Minimum Path Length & Maximum Path Length & Average Path Length & Average time taken
@@ -97,9 +108,7 @@ The model is outlined in the following pseudocode:\\
 	  100 & 10 & 10 & 99 & 53.8 & 99.6 & 5.4 & 996.7 \\ 
 	  \hline
 	\end{tabular}
-	%\caption{Aggregate results for task 4 (N=10 iterations).}
-	%\end{table}
-	Table 1: Aggregate results for task 4 (n=10 iterations).
+	Table 1: Aggregate results for task 4 (n=10 iterations per size).
 	\vspace*{1cm} \\
 	As can be seen from the table above, in all 30 maze trials, a goal was successfully reached within 2*N moves. The table also shows some more interesting information, such as the minimum, maximum and average path length, the average time taken per maze, the average number of mutations, and the total time required to solve the 10 trials for each separate size. The difference in results between the mazes of size 10 and 50 are greater than the expected 5 times increase. Although, the difference between the size 50 and size 100 mazes is approximately doubled for all results, as would be expected from that size increase. Interestingly though, the minimum path length found for the size 100 mazes was almost half that of the size 50 maze, likely due to the randomness of the maze generation.
 
