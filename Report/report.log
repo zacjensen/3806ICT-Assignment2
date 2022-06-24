@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 01:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 01:48
 entering extended mode
 **./report.tex
 (report.tex
@@ -538,14 +538,14 @@ Package rerunfilecheck Warning: File `report.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: B4209094206EE51461E96D0A37DCEB53;1307
-(rerunfilecheck)             After:  7EEE9B7C4AF244E0EADAD4D25FA43624;1145.
+(rerunfilecheck)             Before: 1637ECF18BE09739EC2D9070AC2F048F;1153
+(rerunfilecheck)             After:  FA73BC6872B76E267C0F71E0377B1209;1238.
  ) 
 Here is how much of TeX's memory you used:
- 10871 strings out of 479321
- 164629 string characters out of 2857538
- 475246 words of memory out of 3000000
- 28178 multiletter control sequences out of 15000+600000
+ 10873 strings out of 479321
+ 164654 string characters out of 2857538
+ 475237 words of memory out of 3000000
+ 28179 multiletter control sequences out of 15000+600000
  410678 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,10n,77p,1191b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -556,9 +556,9 @@ amsfonts/cm/cmr10.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmr12.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmr17.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on report.pdf (4 pages, 487477 bytes).
+Output written on report.pdf (4 pages, 488164 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 15 named destinations out of 1000 (max. 500000)
+ 91 PDF objects out of 1000 (max. 8388607)
+ 16 named destinations out of 1000 (max. 500000)
  75 words of extra memory for PDF output out of 10000 (max. 10000000)
 
