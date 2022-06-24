@@ -12,6 +12,7 @@ avg_mutations = 0
 
 begin = time.time()
 
+# Run Task 4 10 times and calculate performance characteristics
 for i in range(10):
 
     goalFound, time_taken, taken_steps, num_mutations = GridWorldtask4.main(

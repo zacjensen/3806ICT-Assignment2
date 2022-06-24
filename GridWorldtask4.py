@@ -19,6 +19,7 @@ def traceToSteps(trace):
 
 def main(params):
     begin = time.time()
+
     # Get the dimensions of the maze from the command line
     width = int(params[1])
     height = int(params[2])
@@ -62,6 +63,7 @@ def main(params):
         if(mutation == False and len(taken_steps) < 2*width):
             goalFound = True
 
+    # Report Agent Status
     if(goalFound):
         print("\n\nFound Goal In ", len(taken_steps), "Steps, Event Log Below:")
         for event in event_log:

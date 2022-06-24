@@ -10,10 +10,11 @@ wall = 'H'
 cell = 'O'
 unvisited = 'u'
 
-
+#seed random generator and colorama
 random.seed(time.time())
 init()
 
+#print maze using colours
 def printMaze(maze, startPos, endPos):
     height = len(maze)
     width = len(maze[0])
@@ -32,7 +33,7 @@ def printMaze(maze, startPos, endPos):
         print()
     #print("\nStart Pos: (" + str(startPos[0]) + " " + str(startPos[1]) + ")\n")
 
-
+# print maze to a txt file
 def printTxt(maze, startPos, endPos):
     height = len(maze)
     width = len(maze[0])
@@ -278,8 +279,6 @@ def initMazeMutate(steps, width, height, oldMaze):
             if (i + 1, j) not in visited:
                 walls.append([i + 1, j])
                 maze[i + 1][j] = wall
-            
-    #printMaze(maze, startPos, startPos)
  
     return walls, maze
 
@@ -301,9 +300,9 @@ def finishMazeMutate(steps, maze):
     startPos = (steps[-1][0], steps[-1][1])
     maze[startPos[0]][startPos[1]] = cell  
  
-    #set goal to be a random walk from start
+    # Set goal to be a random walk from start
     pos = list(startPos)
-    visited = [] #prefer to not revisit old paths but still might
+    visited = []
     
     for i in range(2*(2*width - len(steps))):
         choices = []
@@ -319,13 +318,15 @@ def finishMazeMutate(steps, maze):
             choices.append([y+1, x])
 
         c = random.choice(choices)
+
+        # if already visited c, try choosing once more
         if(c in visited):
             c = random.choice(choices)
         
         pos = c
         visited.append(pos)
 
-    #move once more to make sure goal is not at start
+    # Move once more to make sure goal is not at start
     choices = []
     x = pos[1]
     y = pos[0]
@@ -349,7 +350,7 @@ def finishMazeMutate(steps, maze):
       
         
 def mutate_maze(steps, width, height, oldMaze):
-   
+    
     walls, maze = initMazeMutate(steps, width, height, oldMaze)
     maze = dfs(walls, maze)
     (start, end, maze) = finishMazeMutate(steps, maze)
