@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 01:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 01:57
 entering extended mode
 **./report.tex
 (report.tex
@@ -451,7 +451,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {C:/Users/Zac/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-<assets/mutateMaze.png, id=46, 716.6775pt x 269.005pt>
+<assets/mutateMaze.png, id=50, 716.6775pt x 269.005pt>
 File: assets/mutateMaze.png Graphic file (type png)
 <use assets/mutateMaze.png>
 Package pdftex.def Info: assets/mutateMaze.png  used on input line 61.
@@ -461,7 +461,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--71
 
  []
 
-<assets/task4figure.png, id=48, 668.4975pt x 231.86626pt>
+<assets/task4figure.png, id=52, 668.4975pt x 231.86626pt>
 File: assets/task4figure.png Graphic file (type png)
 <use assets/task4figure.png>
 Package pdftex.def Info: assets/task4figure.png  used on input line 86.
@@ -532,20 +532,14 @@ No file report.bbl.
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: 1637ECF18BE09739EC2D9070AC2F048F;1153
-(rerunfilecheck)             After:  FA73BC6872B76E267C0F71E0377B1209;1238.
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: FA73BC6872B76E267C0F71E0377B1209;1238.
  ) 
 Here is how much of TeX's memory you used:
- 10873 strings out of 479321
- 164654 string characters out of 2857538
- 475237 words of memory out of 3000000
- 28179 multiletter control sequences out of 15000+600000
+ 10874 strings out of 479321
+ 164665 string characters out of 2857538
+ 475255 words of memory out of 3000000
+ 28180 multiletter control sequences out of 15000+600000
  410678 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,10n,77p,1191b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -556,9 +550,9 @@ amsfonts/cm/cmr10.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmr12.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmr17.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on report.pdf (4 pages, 488164 bytes).
+Output written on report.pdf (4 pages, 488394 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
+ 94 PDF objects out of 1000 (max. 8388607)
  16 named destinations out of 1000 (max. 500000)
- 75 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
