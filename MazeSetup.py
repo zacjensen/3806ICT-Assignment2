@@ -19,6 +19,8 @@ init()
 random.seed(time.time())
 
 # Print Maze
+
+
 def printMaze(maze):
     for i in range(0, height):
         for j in range(0, width):
@@ -53,6 +55,8 @@ def surroundingCells(rand_wall):
 
 
 def initMaze():
+    global maze
+    maze = []
     # Denote all cells as unvisited
     for i in range(0, height):
         line = []
@@ -249,10 +253,10 @@ def finishMaze():
         for j in range(0, width):
             if (maze[i][j] == unvisited):
                 maze[i][j] = wall
- 
+
     # Set entrance
-    pos = [0,0]
-   
+    pos = [0, 0]
+
     positions = []
 
     for i in range(0, height):
@@ -260,12 +264,12 @@ def finishMaze():
             pos = [i, 1]
             positions.append(pos)
     startPos = random.choice(positions)
-    maze[startPos[0]][startPos[1]] = cell    
+    maze[startPos[0]][startPos[1]] = cell
 
-    #set goal to be a 2N-1 random walk from start
+    # set goal to be a 2N-1 random walk from start
     pos = list(startPos)
-    visited = [] #prefer to not revisit old paths but still might
-    
+    visited = []  # prefer to not revisit old paths but still might
+
     for i in range(50*len(maze)):
         choices = []
         x = pos[1]
@@ -282,11 +286,11 @@ def finishMaze():
         c = random.choice(choices)
         if(c in visited):
             c = random.choice(choices)
-        
+
         pos = c
         visited.append(pos)
 
-    #move once more to make sure goal is not at start
+    # move once more to make sure goal is not at start
     choices = []
     x = pos[1]
     y = pos[0]
@@ -299,11 +303,11 @@ def finishMaze():
     if(maze[y+1][x] == cell and startPos != (y+1, x)):
         choices.append([y+1, x])
 
-    c = random.choice(choices)       
+    c = random.choice(choices)
     pos = c
-        
+
     endPos = pos
-    maze[endPos[0]][endPos[1]] = cell  
+    maze[endPos[0]][endPos[1]] = cell
 
     #print("Generated Maze with Start at ", startPos, " and goal at ", endPos)
 

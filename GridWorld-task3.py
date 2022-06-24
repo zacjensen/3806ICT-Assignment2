@@ -4,8 +4,6 @@ import sys
 import MutateMaze
 
 
-    
-
 if __name__ == '__main__':
     # Get the dimensions of the maze from the command line
     width = int(sys.argv[1])
@@ -25,13 +23,13 @@ if __name__ == '__main__':
     trace = RLSolver.main(sys.argv, plot=False)
     trace_len = len(trace)
 
-    #convert coordinate sytem
+    # convert coordinate sytem
     steps = []
     for step in trace:
         steps.append((height - step[1] - 1, step[0]))
-    
+
     for step in steps:
         print(step)
 
-    #Move Agent to Goal and Then Mutate Maze
+    # Move Agent to Goal and Then Mutate Maze
     maze = MutateMaze.mutate_maze(steps, width, height, maze)
