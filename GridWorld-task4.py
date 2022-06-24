@@ -66,9 +66,5 @@ else:
     print("Goal Not Reached Within 2N Steps")
 
 
-        
-
-    
-
-
-    
+print("\nStep Summary:")
+print(taken_steps)
