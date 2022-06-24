@@ -45,7 +45,7 @@ if __name__ == '__main__':
             taken_steps.append(step)
             if(random.randint(0,9) == 0):
                 #mutate maze
-                maze = MutateMaze.mutate_maze(taken_steps, width, height)
+                maze = MutateMaze.mutate_maze(taken_steps, width, height, maze)
                 event_log.append("Mutation Event Discovered By Agent")
                 #perform replanning
                 trace = RLSolver.main(sys.argv, plot=False)
@@ -61,6 +61,7 @@ if(goalFound):
     print("\n\nFound Goal In ", len(taken_steps), "Steps, Event Log Below:")
     for event in event_log:
         print(event)
+    print("Goal Reached")
 else:
     print("Goal Not Reached Within 2N Steps")
 

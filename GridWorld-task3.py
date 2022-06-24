@@ -34,4 +34,4 @@ if __name__ == '__main__':
         print(step)
 
     #Move Agent to Goal and Then Mutate Maze
-    maze = MutateMaze.mutate_maze(steps, width, height)
+    maze = MutateMaze.mutate_maze(steps, width, height, maze)

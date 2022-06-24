@@ -211,7 +211,7 @@ def dfs(walls, maze):
     return maze
 	    
 
-def initMazeMutate(steps, width, height):
+def initMazeMutate(steps, width, height, oldMaze):
     maze = []
     # Denote all cells as unvisited
     for i in range(0, height):
@@ -239,6 +239,48 @@ def initMazeMutate(steps, width, height):
             walls.append([i + 1, j])
             maze[i + 1][j] = wall
 
+    #perform some random walks around agent in old maze and keep the visited cells in the new maze
+    #the maze surrounding the agent should mostly remain the same
+    startPos = steps[-1]
+    visited = steps.copy()
+    for n in range(0,5):
+        pos = list(startPos)
+        for walk in range(20*width):
+            choices = []
+            x = pos[1]
+            y = pos[0]
+            if(oldMaze[y][x-1] == cell):
+                choices.append([y, x-1])
+            if(oldMaze[y][x+1] == cell):
+                choices.append([y, x+1])
+            if(oldMaze[y-1][x] == cell):
+                choices.append([y-1, x])
+            if(oldMaze[y+1][x] == cell):
+                choices.append([y+1, x])
+
+            c = random.choice(choices)
+            pos = c
+            visited.append(tuple(pos))
+
+            # Mark it as cell and add surrounding walls to the list
+            i = pos[0]
+            j = pos[1]
+            maze[i][j] = cell
+            if (i-1, j) not in visited:
+                walls.append([i - 1, j])
+                maze[i-1][j] = wall
+            if (i, j-1) not in visited:
+                walls.append([i, j - 1])
+                maze[i][j - 1] = wall
+            if (i, j+1) not in visited:
+                walls.append([i, j + 1])
+                maze[i][j + 1] = wall
+            if (i + 1, j) not in visited:
+                walls.append([i + 1, j])
+                maze[i + 1][j] = wall
+            
+    #printMaze(maze, startPos, startPos)
+ 
     return walls, maze
 
 
@@ -259,7 +301,6 @@ def finishMazeMutate(steps, maze):
     startPos = (steps[-1][0], steps[-1][1])
     maze[startPos[0]][startPos[1]] = cell  
  
-
     #set goal to be a random walk from start
     pos = list(startPos)
     visited = [] #prefer to not revisit old paths but still might
@@ -268,7 +309,7 @@ def finishMazeMutate(steps, maze):
         choices = []
         x = pos[1]
         y = pos[0]
-        if(x > 1 and maze[y][x-1] == cell):
+        if(maze[y][x-1] == cell):
             choices.append([y, x-1])
         if(maze[y][x+1] == cell):
             choices.append([y, x+1])
@@ -307,9 +348,9 @@ def finishMazeMutate(steps, maze):
     return  startPos, endPos, maze
       
         
-def mutate_maze(steps, width, height):
+def mutate_maze(steps, width, height, oldMaze):
    
-    walls, maze = initMazeMutate(steps, width, height)
+    walls, maze = initMazeMutate(steps, width, height, oldMaze)
     maze = dfs(walls, maze)
     (start, end, maze) = finishMazeMutate(steps, maze)
     printMaze(maze, start, end)
