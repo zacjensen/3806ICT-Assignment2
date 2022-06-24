@@ -5,6 +5,7 @@
 \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{array}
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{subcaption}
@@ -30,197 +31,75 @@
 %==============================================================================
 
     \section{Abstract}\label{sec:abstract}
-        This reported aimed to analyze the differing ability between Q-learning 
-        (a form of reinforcement learning) and CSP model checking using the 
-        depth-first search (DFS) engine. Testing was conducted on mazes 
-        ranging in size from 5x5 to 505x505, and the produced path length of 
-        each method, along with the time taken for them to run, and their 
-        memory usage, were evaluated. It was found that while CSP took a 
-        significantly longer time to run and used more memory (exceeding the
-        memory limit of the test system by 355x355), it always found a path
-        to the goal, which Q-learning was unable to do. It was seen that 
-        Q-learning tended to get 'stuck' while searching for the goal in a
-        local optimum position, where it no longer has the ability to move 
-        randomly enough to escape the local optimum, and so expends the rest 
-        of its steps (up to maximum) in the same 1 or 2 states. It was concluded
-        that, despite finding the same results while trying to manually 
-        calibrate the Q-learning values, it is worth exploring different
-        reward functions/algorithms to allow it to escape these local optima.
+        This report explores the problem of autonomous agent planning and replanning in a dynamic environment. In this report, an agent uses Q-learning (reinforcement learning) to navigate through a 2D grid-maze environment towards a goal position. During its navigation however, obstacles in the environment, and the goal position may change. The agent uses replanning techniques to navigate this dynamic environment to successfully reach the goal. A model for such a scenario is presented which is then tested for mazes of various sizes. In most cases, the agent is able to successfully navigate the dynamic environment towards the goal. 
 
     \section{Introduction}\label{sec:introduction}
-        Searching through a maze is a very complex task, because as the size 
-        of the maze increases, the number of possible states increases 
-        drastically. This makes it very difficult to find the 
-        optimal solution in a reasonable amount of time.
+        A maze world is defined as a 2D matrix of ASCII characters where ‘O’ is an open cell that the agent can step to, ‘H’ is a closed wall that the agent cannot step to, ‘G’ is the goal position for the agent, and ‘S’ is the start position for the agent. The agent may move around the maze by taking ‘steps’, where each step may involve moving up,down,left, or right by one cell. In this report, first a model representing an agent navigating a static (unchanging) maze world is shown. Next, a method for creating a dynamic environment is proposed. Finally, experiments on this model are conducted and an analysis of the results is performed.
 
-        \tab Q-learning and CSP model checking using DFS are two very different 
-        solutions to this maze search problem. Q-learning aims to search 
-        for a path from start to goal using a reward function that guides 
-        the algorithm, whereas CSP model checking using DFS is an exhaustive 
-        search of possible paths to the goal.
+    \section{Task 2 - Planning in a Static Environment}\label{sec:test-design}
+        To model an agent navigating a static environment, a maze generation program aswell as a Q-learning based Reinforcement Learning (RL) algorithm were used which are available from the supplied ‘2021-assignment-sample2’ folder [1]. This model is available as ‘GridWorld-task2.py’ and can be run using the command line ‘python3 GridWorld-task2.py [maze\_width] [maze\_height]’.
 
-        \tab One of the key differences between Q-learning and model checking is 
-        that Q-learning is not guaranteed to find a path at all, whereas CSP 
-        is able to find a path every single time. The downside of this is 
-        that its runtime and memory usage can balloon quickly, and as maze 
-        size increases it quickly becomes impractical to use.
+In this model, a maze is randomly generated with a start point and goal point using a common random depth-first search (DFS) based algorithm. The Q-learning algorithm then provides a set of steps (a trace) towards the goal from the start. An extra constraint for this model is that the agent can take no more than 2N steps where N is the width of the NxN maze. 
 
-    \section{Test Design}\label{sec:test-design}
-        For this report, the designed test was to randomly generate mazes of 
-        size 5x5 to size 505x505 and profile the running of both PAT analyzing 
-        it with CSP in DFS mode and Q-learning. This allowed comparison of 
-        the time taken for it to run, the length of the path it found, and 
-        the memory it used to do so.
+The model is outlined in the following pseudocode:\\
+\hspace*{4cm}maze $\leftarrow$ generateMaze(height, width)\\
+\hspace*{4cm}RLSolver $\leftarrow$ initialise Q-Learning solver\\
+\hspace*{4cm}trace $\leftarrow$ RLSolver.solve(maze)\\
+\hspace*{4cm}if trace.length $<$ 2*width:\\
+\hspace*{5cm}goal $\leftarrow$ reached
 
-        \tab As for the implementation of these, the maze generator utilised a
-        backtracking algorithm in $C++$, the CSP had an adjustment that marked its
-        previous moves, and the reinforcement learning was the lab's version
-        split into scripts. The reason for the maze using backtracking and being
-        so optimised is because we want to be able to speed up generating
-        samples. Furthermore, backtracking gives us a good time, memory,
-        produced minimal dead ends, is bias free and not uniform 
-        \cite{source}.
 
-        \tab In terms of the hardware and software configuration, it was ran on
-        WSL2 inside of Windows 10 on a Ryzen 5900 with 32GB of RAM. Due to it
-        being in WSL2, mono was used to run PAT 3 which means that the times are
-        likely around three times slower than they would be on just Windows. 
-        The reason for using WSL2 is because we have access to the time command,
-        which makes recording the memory of the reinforcement learning script
-        easier. 
+\section{Task 3 - Programming A Dynamic Environment}\label{sec:test-design}
+	To model a dynamic environment, a function was created which takes an existing maze and returns a new maze which is a ‘mutation’ of the original. This model is available as ‘GridWorld-task3.py’ which calls mutate\_maze() in ‘MutateMaze.py’ and can be run using the command line ‘python3 GridWorld-task3.py [maze\_width] [maze\_height]’. 
 
-        \tab With regards to the parameters of the RL, it was set to be at 
-        gamma$=0.99$, alpha=$0.1$, epsilon=$0.1$, max iterations to be 100 
-        and maximum steps were 1000. This means that no solutions were found
-        over 1000, but that's fine for this purpose.
+	The constraints for this are that the new maze must share similarities to the old one, and obstacles in the new maze mustn’t overlap with the current, or previous positions of the agent. The goal must also not be blocked off from the agent by obstacles. To generate a mutation, first all of the previous positions of the agent are collected. Next, multiple random walks are conducted from the agents current position in the original maze, keeping track of all cells visited by the search. A new maze is initialised with all of the agent’s previous positions and cells visited by the random walks and the DFS maze generation algorithm is run to generate a new maze containing these cells. Finally, the new goal location is set using a random walk, where the walk becomes shorter if the agent has taken alot of steps. This mutation method generates a new maze that guarantees that the goal is reachable and the agent or its previous positions are not overlapped by an obstacle. It also produces a maze that has a similar structure to the old maze for all cells close to the agent, but becomes increasingly different for cells further away from the agent. 
+
+	The model is demonstrated by using the model from task 2, and then mutating the maze once the agent reaches the goal. Figure 1 shows the three steps involved in a maze mutation including the original maze, initialising the new maze with the previous positions of the agent aswell as the paths of multiple random walks, and finally the newly generated maze. Here, ‘u’ is a maze element which hasn’t yet been initialised. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{assets/mutateMaze.png}
+	\caption{The Three Steps of A Maze Mutation. Initial Maze (Left), Choosing Maze Features To Keep (Middle), Mutated Maze (Right)}
+\end{figure}
+
+
+\section{Task 4 - Replanning in a Dynamic Environment}\label{sec:test-design}
+
+	To model planning and replanning in a dynamic environment, the agent in task 2 and the mutation function in task 3 were combined. This model is available as ‘GridWorld-task4.py’ and can be run using the command line ‘python3 GridWorld-task4.py [maze\_width] [maze\_height]’.
+
+Here, after calling the program on the command line, an initial maze is generated. The agent then autonomously plans a route towards the goal and starts taking steps towards it. At each step there is a 10\% chance that the maze mutates. If so, the maze is mutated with the function created in task 3. The agent then replans its route by solving the maze from its current position. Finally, the program terminates when either the agent reaches the goal, or the agent has taken more than 2*width steps, in which case the agent is reported to have failed. \\
+
+The model is outlined in the following pseudocode:\\
+\hspace*{2cm}maze $\leftarrow$ generateMaze(height, width)\\
+\hspace*{2cm}agent $\leftarrow$ agent object positioned at maze.start\\
+\hspace*{2cm}steps $\leftarrow$ empty list\\
+\hspace*{2cm}while agent has not reached goal and steps.size $<$ 2*width\\
+\hspace*{3cm}trace $\leftarrow$ RLSolver.solve(maze)\\
+\hspace*{3cm}for step in trace:\\
+	\hspace*{4cm}steps.append(step)\\
+	\hspace*{4cm}agent $\leftarrow$ update agent position to step\\
+	\hspace*{4cm}if 10\% chance occurs: mutate maze and break from for loop\\
+\hspace*{2cm}check if agent at goal
+
 
     \section{Results}\label{sec:results}
 
-        \begin{table}[ht!]
-            \resizebox{\textwidth}{!}{
-                \input{table}
-            }
-        \end{table}
-        \newpage
+        \begin{tabular}{ | m{1cm} | m{5em}| m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | } 
+	\hline
+	Size & Number of Times Goal was reached & Minimum Path Length & Maximum Path Length & Average Path Length & Average time taken
+	per maze (s) & Average number of Mutations & Total time taken (s)\\
+	  \hline
+	  10 & 10 & 2 & 18 & 10 & 1.26 & 0.6 & 12.61 \\ 
+	  \hline
+	  50 & 10 & 19 & 59 & 38.5 & 46.49 & 3.7 & 464.87 \\ 
+	  \hline
+	  100 & 10 & 10 & 99 & 53.8 & 99.6 & 5.4 & 996.7 \\ 
+	  \hline
+	\end{tabular}
+	\vspace*{1cm} \\
+	As we can see from the table above
 
-
-        \begin{figure}[ht]
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/CSPTimeVsSize.PNG}
-                \caption{Model checking time vs size}
-            \end{subfigure}
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/RLTimeVsSize.PNG}
-                \caption{RL time vs size}
-            \end{subfigure}
-        \end{figure}
-
-         \tab It can be seen from this figure that, when it successfully found a 
-         path, reinforcement learning was much quicker than CSP, following a 
-         time trend closer to $O(n)$. This is likely because the number of
-         iterations is a constant, and actually if we look at the table we can
-         see that the time spent trying to solve something is constant. 
-
-         \tab CSP, on the other hand, followed a polynomial curve, somewhat 
-         following a trend of $O(n^2)$. This makes sense because CSP 
-         uses DFS, which would be $O(|V|+|E|)$ where $V$ is vertices (number 
-         of cells in the graph, which is $n^2$) and $E$ is edges (which is 
-         more or less constant).
-
-        \begin{figure}[ht]
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/CSPPathVsSize.PNG}
-                \caption{Model checking steps vs maze size}
-            \end{subfigure}
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/RLPathVsSize.PNG}
-                \caption{RL steps vs maze size}
-            \end{subfigure}
-        \end{figure}
-
-         \tab When the number of steps in the found path is shown on its own, 
-         however, it paints a much worse picture for the Q-learning algorithm. 
-         It was able to find a path from the start point to the goal in 
-         only a few of the maze sizes, whereas CSP (while eventually 
-         running out of memory) was able to find a path in every maze 
-         it was able to search.
-
-         \tab It is suspected here that Q-learning often failed to find the goal 
-         in larger maze sizes due to its reward algorithm. As it proceeded 
-         through the maze and its step count for each iteration increased, 
-         it became less and less likely to perform the required 'random' 
-         movements that were not greedy to escape local optima. This lead
-         to it getting stuck in long dead-end paths, where there is a much 
-         higher incentive for the algorithm to remain
-         in the current state than move back out.
-
-         \tab Different configurations of starting values were tested to try 
-         overcoming this problem, such as increasing alpha, gamma, epsilon, 
-         the maximum number of steps and the maximum number of iterations. 
-         However, none of these were capable of avoiding the issue faced. 
-         More max steps meant just more steps where the agent did not move, more
-         iterations were ineffective as it behaved the same way each iteration, 
-         gamma was already at 0.99 so further increases were un-noticeable, 
-         and alpha and epsilon increases did nothing, likely because by the 
-         time the algorithm had reached a dead end the chance of backtracking 
-         was so low that it was effectively impossible to fix.
-
-
-         A noteworthy factor for interpreting these results is that RL is
-         basically finding a result in the case that it can complete $O(1)$, as
-         the results given here were generated under a constant environment for 
-         all the solutions. It just looks like $O(n)$ until it hits that wall. 
-         This means that the one solution it managed to find
-         at around maze size 300x300 is an outlier, and we can see that it
-         just managed to be found because the solution was so close. On the
-         other hand, DFS still managed to take a really roundabout path to find
-         it.
-
-        \begin{figure}[ht]
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/CSPMemoryVsSize.PNG}
-                \caption{Model checking memory vs size}
-            \end{subfigure}
-            \begin{subfigure}{.5\textwidth}
-                \centering
-                \includegraphics[scale=0.5]{assets/RlMemoryVsSize.PNG}
-                \caption{RL memory vs size}
-                \label{sonarCode}
-            \end{subfigure}
-        \end{figure}
-
-         \tab This graph shows the difference in memory usage between RL and CSP. 
-         This is to be expected, as DFS is an exhaustive search, which holds 
-         all of the current nodes for the path currently being checked in 
-         memory. While more memory efficient than BFS, it is still very 
-         memory hungry, but well-worth the results considering the 
-         performance of RL.
-
-    \section{Conclusion}\label{sec:conclusion}
-
-        \tab In testing for this report, it is clear that Q-learning does not 
-        perform as well as CSP for this task at such high maze sizes. 
-        It was consistently faster, less memory intensive and more accurate 
-        than CSP at smaller maze sizes, however the algorithm could not perform 
-        at higher maze sizes, failing to find paths at all.
-
-        \tab It is advised that the reinforcement learning algorithm be adjusted
-        to be dynamic (scaling the variables based on the maze size), and
-        introducing a random restart algorithm to it. An alternative to random
-        restart would be to just introduce a penalty for repeatedly entering the
-        same states, or rewarding it for finding new ones. With these, it is
-        potentially possible to keep an $O(n)$ time complexity solving the maze at
-        larger mazes as well.
-        \\ \\
-        If a solution were to be required for deployment using identical 
-        configurations to those used in this report, it is recommended that 
-        Q-learning be used for smaller maze sizes (for example, below 50) and 
-        CSP be used for maze sizes that are larger.
+     
 
 %==============================================================================
     \bibliographystyle{apalike}
