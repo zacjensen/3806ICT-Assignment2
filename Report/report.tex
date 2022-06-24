@@ -84,6 +84,7 @@ The model is outlined in the following pseudocode:\\
 
     \section{Results}\label{sec:results}
 
+	%\begin{table}
         \begin{tabular}{ | m{1cm} | m{5em}| m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | m{2cm} | } 
 	\hline
 	Size & Number of Times Goal was reached & Minimum Path Length & Maximum Path Length & Average Path Length & Average time taken
@@ -96,10 +97,16 @@ The model is outlined in the following pseudocode:\\
 	  100 & 10 & 10 & 99 & 53.8 & 99.6 & 5.4 & 996.7 \\ 
 	  \hline
 	\end{tabular}
+	%\caption{Aggregate results for task 4 (N=10 iterations).}
+	%\end{table}
+	Table 1: Aggregate results for task 4 (n=10 iterations).
 	\vspace*{1cm} \\
-	As we can see from the table above
+	As can be seen from the table above, in all 30 maze trials, a goal was successfully reached within 2*N moves. The table also shows some more interesting information, such as the minimum, maximum and average path length, the average time taken per maze, the average number of mutations, and the total time required to solve the 10 trials for each separate size. The difference in results between the mazes of size 10 and 50 are greater than the expected 5 times increase. Although, the difference between the size 50 and size 100 mazes is approximately doubled for all results, as would be expected from that size increase. Interestingly though, the minimum path length found for the size 100 mazes was almost half that of the size 50 maze, likely due to the randomness of the maze generation.
 
-     
+    
+	\section{Conclusion}\label{sec:conclusion}
+	This report shows that given a dynamic environment, to achieve its goal, an agent must be able to perform a planning-replanning cycle. Presented in this report is a model for such an agent based on Q-learning as well as a method for creating a dynamic environment for a 2D maze world based on the DFS maze generation algorithm. For future experiments, it is advised that the Q-learning algorithm may converge more quickly if its Q-table is kept after each mutation rather than being initialised to zeros each time. This would allow for less training iterations and therefore better performance in terms of time. 
+
 
 %==============================================================================
     \bibliographystyle{apalike}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 00:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.5.1)  25 JUN 2022 00:50
 entering extended mode
 **./report.tex
 (report.tex
@@ -451,7 +451,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {C:/Users/Zac/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-<assets/mutateMaze.png, id=38, 716.6775pt x 269.005pt>
+<assets/mutateMaze.png, id=42, 716.6775pt x 269.005pt>
 File: assets/mutateMaze.png Graphic file (type png)
 <use assets/mutateMaze.png>
 Package pdftex.def Info: assets/mutateMaze.png  used on input line 61.
@@ -462,62 +462,62 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--71
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 []|\OT1/cmr/m/n/10 Number
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 \OT1/cmr/m/n/10 of Times
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 \OT1/cmr/m/n/10 Goal was
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 []|\OT1/cmr/m/n/10 Minimum
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
+Underfull \hbox (badness 10000) in paragraph at lines 90--90
 []|\OT1/cmr/m/n/10 Maximum
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--89
-[]|\OT1/cmr/m/n/10 Average
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
-[]|\OT1/cmr/m/n/10 Average
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
-\OT1/cmr/m/n/10 time taken
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 90--90
 []|\OT1/cmr/m/n/10 Average
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--90
-\OT1/cmr/m/n/10 num-ber of
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 90--91
+[]|\OT1/cmr/m/n/10 Average
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
+\OT1/cmr/m/n/10 time taken
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--91
+[]|\OT1/cmr/m/n/10 Average
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--91
+\OT1/cmr/m/n/10 num-ber of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
 []|\OT1/cmr/m/n/10 Total time
  []
 
 
-Overfull \hbox (19.00179pt too wide) in paragraph at lines 87--101
+Overfull \hbox (19.00179pt too wide) in paragraph at lines 88--105
 []
  []
 
@@ -528,13 +528,13 @@ No file report.bbl.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 3ADF9623255D840E92FEC600861EED23;1088.
+(rerunfilecheck)             Checksum: 80194819D9F49E8A33FD5C218D1A32CB;1181.
  ) 
 Here is how much of TeX's memory you used:
- 10857 strings out of 479321
- 164386 string characters out of 2857538
- 474175 words of memory out of 3000000
- 28169 multiletter control sequences out of 15000+600000
+ 10860 strings out of 479321
+ 164422 string characters out of 2857538
+ 475208 words of memory out of 3000000
+ 28171 multiletter control sequences out of 15000+600000
  410678 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,10n,77p,1191b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -545,9 +545,9 @@ amsfonts/cm/cmr10.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmr12.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmr17.pfb><C:/Users/Zac/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on report.pdf (3 pages, 321882 bytes).
+Output written on report.pdf (3 pages, 323926 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 54 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 78 PDF objects out of 1000 (max. 8388607)
+ 12 named destinations out of 1000 (max. 500000)
+ 62 words of extra memory for PDF output out of 10000 (max. 10000000)
 
